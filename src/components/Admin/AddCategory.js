@@ -39,6 +39,7 @@ function AddCategory() {
 				};
 			});
 			history.push("/addcategory");
+			searchForData();
 		} catch (error) {
 			console.error(error);
 		}
