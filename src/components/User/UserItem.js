@@ -7,19 +7,13 @@ function UserItem({ user, onDetail }) {
 	return (
 		<div className="row my-1">
 			<div className="col-lg-2">
-				<input
-					type="checkbox"
-					name="gst"
-					className="form-control"
-					disabled={true}
-					checked={admin}
-				/>
+				<input type="checkbox" disabled={true} checked={admin} />
 			</div>
-			<div className="col-10 mx-auto col-lg-2">
+			<div className="col-10 mx-auto col-lg-3">
 				<span className="d-lg-none">name : </span>
 				{name}
 			</div>
-			<div className="col-10 mx-auto col-lg-2">
+			<div className="col-10 mx-auto col-lg-3">
 				<span className="d-lg-none">email : </span>
 				{email}
 			</div>
@@ -27,7 +21,7 @@ function UserItem({ user, onDetail }) {
 				<span className="d-lg-none">phone : </span>
 				{phone}
 			</div>
-			<div className="col-10 mx-auto col-lg-1">
+			<div className="col-10 mx-auto col-lg-2">
 				<Button
 					onClick={() => {
 						onDetail(_id.toString());

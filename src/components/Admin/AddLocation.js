@@ -150,7 +150,7 @@ function AddLocation() {
 			<div>
 				<h3>Add Location:</h3>
 				<Form onSubmit={onSubmit} className="row">
-					<Form.Group className="col-lg-3">
+					<Form.Group className="col-lg-2">
 						<Form.Label>Address: </Form.Label>
 						<Autocomplete
 							fields={["geometry.location", "formatted_address"]}
@@ -158,18 +158,16 @@ function AddLocation() {
 							onLoad={onLoadAddress}
 							bounds={mapBounds}
 						>
-							<div className="search-wrapper">
+							<div>
 								<input
 									type="text"
 									value={address}
 									onChange={handleAuto}
 									placeholder={"🔍 Enter address to find Distance to Home"}
 								/>
-								<button
-									className="close-icon"
-									type="reset"
-									onClick={() => setAddress("")}
-								></button>
+								<button type="reset" onClick={() => setAddress("")}>
+									X
+								</button>
 							</div>
 						</Autocomplete>
 					</Form.Group>
@@ -193,7 +191,7 @@ function AddLocation() {
 							onChange={handleChange}
 						/>
 					</Form.Group>
-					<Form.Group className="col-lg-1">
+					<Form.Group className="col-lg-2">
 						<Form.Label>Category: </Form.Label>
 						<select
 							required
@@ -253,7 +251,7 @@ function AddLocation() {
 						/>
 					</Form.Group>
 					<div className="col-10 mx-auto col-lg-1">
-						<Form.Label>Submit: </Form.Label>
+						<br></br>
 						<Button type="submit">Submit</Button>
 					</div>
 				</Form>

@@ -57,19 +57,18 @@ function UserItem({ user, onDetail }) {
 	return (
 		<Form className="row my-1" onSubmit={onSave}>
 			<Form.Group className="col-10 mx-auto col-lg-2">
-				<Form.Control
-					type="checkbox"
+				<Form.Check
 					name="admin"
 					value={users.admin}
 					checked={users.admin}
 					onChange={handleCheck}
 				/>
 			</Form.Group>
-			<div className="col-10 mx-auto col-lg-2">
+			<div className="col-10 mx-auto col-lg-3">
 				<span className="d-lg-none">name : </span>
 				{name}
 			</div>
-			<div className="col-10 mx-auto col-lg-2">
+			<div className="col-10 mx-auto col-lg-3">
 				<span className="d-lg-none">email : </span>
 				{email}
 			</div>
@@ -83,7 +82,7 @@ function UserItem({ user, onDetail }) {
 					onChange={handleChange}
 				/>
 			</Form.Group>
-			<div className="col-10 mx-auto col-lg-1">
+			<div className="col-10 mx-auto col-lg-2">
 				<Button type="submit">
 					<i className="fas fa-save"></i>
 				</Button>
