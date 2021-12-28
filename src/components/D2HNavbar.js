@@ -71,7 +71,7 @@ export default function D2HNavbar({
 						className="d-inline-block align-top"
 						alt="distance2home logo"
 					/>
-					<small>findCentres</small>
+					<small>findAService</small>
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 				<Navbar.Collapse id="responsive-navbar-nav">
