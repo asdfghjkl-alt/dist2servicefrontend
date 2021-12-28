@@ -5,7 +5,8 @@ import {
 	NavDropdown,
 	Container,
 	Offcanvas,
-	Button,
+	ListGroup,
+	Dropdown,
 } from "react-bootstrap/";
 import { AuthContext } from "../auth-context";
 import axios from "axios";
@@ -19,6 +20,7 @@ export default function D2HNavbar({
 }) {
 	const auth = useContext(AuthContext);
 	const [categories, setCategories] = useState([]);
+	const [markers, setMarkers] = useState([]);
 
 	function onSelectRadius(_selectedKey) {
 		localStorage.setItem(localStorage_myRadius, _selectedKey);
@@ -37,6 +39,10 @@ export default function D2HNavbar({
 				process.env.REACT_APP_BACKEND_URL + "category/"
 			);
 			setCategories(resExs.data);
+			resExs = await axios.get(
+				process.env.REACT_APP_BACKEND_URL + "locations/"
+			);
+			setMarkers(resExs.data);
 		} catch (error) {
 			console.error(error);
 		}
@@ -149,11 +155,36 @@ export default function D2HNavbar({
 				</Navbar.Collapse>
 				<Offcanvas show={show} onHide={handleClose}>
 					<Offcanvas.Header closeButton>
-						<Offcanvas.Title>Offcanvas</Offcanvas.Title>
+						<Offcanvas.Title>Markers</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
-						Some text as placeholder. In real life you can have the elements you
-						have chosen. Like, text, images, lists, etc.
+						<ListGroup>
+							{markers.map((marker) => {
+								return (
+									<Dropdown>
+										<Dropdown.Toggle variant="success" id="dropdown-basic">
+											{marker.english}
+										</Dropdown.Toggle>
+										<Dropdown.Menu>
+											<Dropdown.Item>{marker.chinese}</Dropdown.Item>
+											<Dropdown.Item>{marker.category}</Dropdown.Item>
+											<Dropdown.Item>{marker.phone}</Dropdown.Item>
+											<Dropdown.Item>{marker.desc}</Dropdown.Item>
+											<Dropdown.Item>
+												<a
+													href={marker.webpage}
+													target="_blank"
+													rel="noreferrer"
+												>
+													{marker.webpage}
+												</a>
+											</Dropdown.Item>
+											<Dropdown.Item>{marker.chinesedesc}</Dropdown.Item>
+										</Dropdown.Menu>
+									</Dropdown>
+								);
+							})}
+						</ListGroup>
 					</Offcanvas.Body>
 				</Offcanvas>
 			</Container>

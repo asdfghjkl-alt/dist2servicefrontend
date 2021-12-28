@@ -87,7 +87,7 @@ function AddCategory() {
 			<h1>Categories:</h1>
 			{options.map((option) => {
 				return (
-					<div className="row my-1 text-capitalize">
+					<div className="row my-1 text-capitalize" key={option._id}>
 						<div className="col-10 mx-auto col-lg-12">{option.title}</div>
 					</div>
 				);

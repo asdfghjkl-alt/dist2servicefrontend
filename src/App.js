@@ -28,9 +28,11 @@ function App() {
 	);
 
 	const [category, setCategory] = useState(
-		localStorage.getItem(localStorage_myCategory) || "Chinese Churches" // default to 5km, unless set by user previously
+		localStorage.getItem(localStorage_myCategory) || "Chinese Churches"
 	);
+
 	const [selectedMarker, setSelectedMarker] = useState(null);
+
 	return (
 		<AuthProvider>
 			<LocationProvider>
