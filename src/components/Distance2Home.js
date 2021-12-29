@@ -354,12 +354,8 @@ export default function Distance2Home({
 						}}
 					>
 						<div>
-							<p>{selectedMarker.english}</p>
+							<h3 className="title">{selectedMarker.english}</h3>
 							<p>{selectedMarker.chinese}</p>
-							<p>{selectedMarker.desc}</p>
-							<p>{selectedMarker.chinesedesc}</p>
-							<p>{selectedMarker.address}</p>
-							<p>{selectedMarker.phone}</p>
 							<p href={selectedMarker.webpage}>
 								<a
 									href={selectedMarker.webpage}
@@ -369,6 +365,10 @@ export default function Distance2Home({
 									{selectedMarker.webpage}
 								</a>
 							</p>
+							<p>{selectedMarker.phone}</p>
+							<p>{selectedMarker.desc}</p>
+							<p>{selectedMarker.chinesedesc}</p>
+							<p>{selectedMarker.address}</p>
 						</div>
 					</InfoWindow>
 				) : null}
