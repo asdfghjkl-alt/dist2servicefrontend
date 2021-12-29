@@ -5,8 +5,7 @@ import {
 	NavDropdown,
 	Container,
 	Offcanvas,
-	ListGroup,
-	Dropdown,
+	Accordion,
 } from "react-bootstrap/";
 import { AuthContext } from "../auth-context";
 import axios from "axios";
@@ -158,33 +157,25 @@ export default function D2HNavbar({
 						<Offcanvas.Title>Markers</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
-						<ListGroup>
+						<Accordion>
 							{markers.map((marker) => {
 								return (
-									<Dropdown>
-										<Dropdown.Toggle variant="success" id="dropdown-basic">
-											{marker.english}
-										</Dropdown.Toggle>
-										<Dropdown.Menu>
-											<Dropdown.Item>{marker.chinese}</Dropdown.Item>
-											<Dropdown.Item>{marker.category}</Dropdown.Item>
-											<Dropdown.Item>{marker.phone}</Dropdown.Item>
-											<Dropdown.Item>{marker.desc}</Dropdown.Item>
-											<Dropdown.Item>
-												<a
-													href={marker.webpage}
-													target="_blank"
-													rel="noreferrer"
-												>
-													{marker.webpage}
-												</a>
-											</Dropdown.Item>
-											<Dropdown.Item>{marker.chinesedesc}</Dropdown.Item>
-										</Dropdown.Menu>
-									</Dropdown>
+									<Accordion.Item eventKey={marker._id}>
+										<Accordion.Header>{marker.english}</Accordion.Header>
+										<Accordion.Body>
+											<p>{marker.chinese}</p>
+											<p>{marker.category}</p>
+											<p>{marker.phone}</p>
+											<p>{marker.desc}</p>
+											<a href={marker.webpage} target="_blank" rel="noreferrer">
+												{marker.webpage}
+											</a>
+											<p>{marker.chinesedesc}</p>
+										</Accordion.Body>
+									</Accordion.Item>
 								);
 							})}
-						</ListGroup>
+						</Accordion>
 					</Offcanvas.Body>
 				</Offcanvas>
 			</Container>
