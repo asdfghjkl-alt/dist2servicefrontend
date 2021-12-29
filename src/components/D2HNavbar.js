@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap/";
 import { AuthContext } from "../auth-context";
 import axios from "axios";
+import { LocationContext } from "../location-context";
 
 export default function D2HNavbar({
 	setCategory,
@@ -17,6 +18,7 @@ export default function D2HNavbar({
 	localStorage_myRadius,
 	localStorage_myCategory,
 }) {
+	const locContext = useContext(LocationContext);
 	const auth = useContext(AuthContext);
 	const [categories, setCategories] = useState([]);
 	const [markers, setMarkers] = useState([]);
@@ -55,6 +57,29 @@ export default function D2HNavbar({
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+
+	function haversine_distance(pos1, pos2) {
+		// calculate the distance between two pos1 and pos2
+		// var R = 3958.8; // Radius of the Earth in miles
+		let R = 6371.071; // Radius of the Earth in kilometers
+		var rlat1 = pos1.lat * (Math.PI / 180); // Convert degrees to radians
+		var rlat2 = pos2.lat * (Math.PI / 180); // Convert degrees to radians
+		var difflat = rlat2 - rlat1; // Radian difference (latitudes)
+		var difflon = (pos2.lng - pos1.lng) * (Math.PI / 180); // Radian difference (longitudes)
+		var d =
+			2 *
+			R *
+			Math.asin(
+				Math.sqrt(
+					Math.sin(difflat / 2) * Math.sin(difflat / 2) +
+						Math.cos(rlat1) *
+							Math.cos(rlat2) *
+							Math.sin(difflon / 2) *
+							Math.sin(difflon / 2)
+				)
+			);
+		return d;
+	}
 
 	return (
 		<Navbar collapseOnSelect expand="lg" bg="success" variant="dark">
@@ -171,6 +196,13 @@ export default function D2HNavbar({
 												{marker.webpage}
 											</a>
 											<p>{marker.chinesedesc}</p>
+											<p>
+												{haversine_distance(
+													locContext.homeAddress,
+													marker
+												).toFixed(2)}
+												km
+											</p>
 										</Accordion.Body>
 									</Accordion.Item>
 								);

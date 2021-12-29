@@ -6,6 +6,9 @@ const LocationContext = React.createContext();
 function LocationProvider(props) {
 	const auth = useContext(AuthContext);
 	const [locations, setLocations] = useState([]);
+	const [homeAddress, setHomeAddress] = useState(
+		JSON.parse(localStorage.getItem("distance2homeAddress")) || null
+	);
 
 	const searchForData = useCallback(async () => {
 		try {
@@ -27,6 +30,8 @@ function LocationProvider(props) {
 			value={{
 				locations: locations,
 				searchForData: searchForData,
+				homeAddress: homeAddress,
+				setHomeAddress: setHomeAddress,
 			}}
 		>
 			{props.children}

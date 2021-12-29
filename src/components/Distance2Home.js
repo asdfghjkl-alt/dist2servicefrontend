@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import axios from "axios";
 import {
 	GoogleMap,
@@ -9,6 +9,7 @@ import {
 	Autocomplete,
 } from "@react-google-maps/api";
 import "./Distance2Home.css";
+import { LocationContext } from "../location-context";
 
 // const options = {
 //   zoomControlOptions: {
@@ -43,6 +44,10 @@ export default function Distance2Home({
 		},
 	];
 
+	const locContext = useContext(LocationContext);
+
+	const setHomeAddress = locContext.setHomeAddress;
+
 	// refresh my Position when necessary
 	const [mapCenter, setMapCenter] = useState(
 		JSON.parse(localStorage.getItem(localStorage_homeAddr)) || initLocation
@@ -50,9 +55,6 @@ export default function Distance2Home({
 	const [mapZoom, setMapZoom] = useState(11);
 	const [mapBounds, setMapBounds] = useState(null);
 	const [myPosition, setMyPosition] = useState(null);
-	const [homeAddress, setHomeAddress] = useState(
-		JSON.parse(localStorage.getItem(localStorage_homeAddr)) || null
-	);
 	const [homeAddrStr, setHomeAddrStr] = useState(
 		JSON.parse(localStorage.getItem(localStorage_homeAddrStr)) || null
 	);
@@ -67,8 +69,8 @@ export default function Distance2Home({
 			};
 			setMyPosition(_myPos);
 
-			if (homeAddress != null) {
-				const _dist = haversine_distance(_myPos, homeAddress);
+			if (locContext.homeAddress != null) {
+				const _dist = haversine_distance(_myPos, locContext.homeAddress);
 				const _distColor = _dist * 1000 > cRadius ? "red" : "green";
 				setDistanceToHome({
 					distance: _dist,
@@ -76,7 +78,7 @@ export default function Distance2Home({
 				});
 			}
 		});
-	}, [cRadius, homeAddress]);
+	}, [cRadius, locContext.homeAddress]);
 
 	const searchForData = useCallback(async () => {
 		try {
@@ -114,7 +116,7 @@ export default function Distance2Home({
 			};
 			setMyPosition(_myPos);
 
-			if (homeAddress == null) {
+			if (locContext.homeAddress == null) {
 				// if user hasn't entered home address, map is centered at _myPos, also setMapBounds around _myPos
 				setMapCenter(_myPos);
 				setMapBounds({
@@ -128,7 +130,7 @@ export default function Distance2Home({
 				});
 			} else {
 				// if home address exists, calculate my distance to home and display results
-				const _dist = haversine_distance(_myPos, homeAddress);
+				const _dist = haversine_distance(_myPos, locContext.homeAddress);
 				const _distColor = _dist * 1000 > cRadius ? "red" : "green";
 				setDistanceToHome({
 					distance: _dist,
@@ -138,7 +140,7 @@ export default function Distance2Home({
 		}
 
 		navigator.geolocation.getCurrentPosition(handleGotPosition);
-	}, [cRadius, homeAddress]);
+	}, [cRadius, locContext.homeAddress]);
 
 	useEffect(() => {
 		// auto set map zoom level according to Radius setting
@@ -154,8 +156,8 @@ export default function Distance2Home({
 	}, [cRadius]);
 
 	useEffect(() => {
-		// initially when there is no host position or homeAddress, setMapBounds to initial  mapCenter = initLocation (Sydney CBD)
-		// when user entered homeAddress as new mapCenter, setMapBounds around the new mapCenter
+		// initially when there is no host position or locContext.homeAddress, setMapBounds to initial  mapCenter = initLocation (Sydney CBD)
+		// when user entered locContext.homeAddress as new mapCenter, setMapBounds around the new mapCenter
 		setMapBounds({
 			// a degree in latitude is 111km
 			// a degree in longitude is 85km at 40deg latitude
@@ -267,9 +269,9 @@ export default function Distance2Home({
 					</div>
 				</Autocomplete>
 				<button onClick={() => setHomeAddress(null)}>Delete</button>
-				{homeAddress && homeAddrStr && (
+				{locContext.homeAddress && homeAddrStr && (
 					<Marker
-						position={homeAddress}
+						position={locContext.homeAddress}
 						title={
 							homeAddrStr.split(",")[0] +
 							"\n" +
@@ -292,7 +294,7 @@ export default function Distance2Home({
 						}}
 					>
 						<Circle
-							center={homeAddress}
+							center={locContext.homeAddress}
 							// center={myPosition}
 							options={{
 								strokeColor: "red",
