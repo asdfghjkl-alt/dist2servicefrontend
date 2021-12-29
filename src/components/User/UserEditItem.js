@@ -34,6 +34,22 @@ function UserItem({ user, onDetail }) {
 		});
 	}
 
+	const deleteUser = async () => {
+		try {
+			await axios.delete(
+				process.env.REACT_APP_BACKEND_URL + "users/delete/" + _id.toString(),
+				{
+					headers: { Authorization: "Bearer " + auth.token },
+				}
+			);
+			context.searchForData();
+			history.push("/editusers");
+			onDetail("");
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	const history = useHistory();
 
 	const onSave = async (event) => {
@@ -82,9 +98,18 @@ function UserItem({ user, onDetail }) {
 					onChange={handleChange}
 				/>
 			</Form.Group>
-			<div className="col-10 mx-auto col-lg-2">
+			<div className="col-10 mx-auto col-lg-1">
 				<Button type="submit">
 					<i className="fas fa-save"></i>
+				</Button>
+			</div>
+			<div className="col-10 mx-auto col-lg-1">
+				<Button
+					onClick={() => {
+						deleteUser();
+					}}
+				>
+					<i className="fas fa-dumpster"></i>
 				</Button>
 			</div>
 		</Form>
