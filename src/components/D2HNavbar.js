@@ -196,13 +196,15 @@ export default function D2HNavbar({
 												{marker.webpage}
 											</a>
 											<p>{marker.chinesedesc}</p>
-											<p>
-												{haversine_distance(
-													locContext.homeAddress,
-													marker
-												).toFixed(2)}
-												km
-											</p>
+											{locContext.homeAddress && (
+												<p>
+													{haversine_distance(
+														locContext.homeAddress,
+														marker
+													).toFixed(2)}
+													) km
+												</p>
+											)}
 										</Accordion.Body>
 									</Accordion.Item>
 								);
